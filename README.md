@@ -58,7 +58,7 @@ It is recommended using [Jaspersoft Studio](http://community.jaspersoft.com/proj
 ## Requirements
 
 * PHP 7.2 or above
-* Java JDK 1.8
+* Java less than version 11
 
 ## Optional
 
@@ -73,14 +73,14 @@ It is recommended using [Jaspersoft Studio](http://community.jaspersoft.com/proj
 
 Install [Composer](http://getcomposer.org) if you don't have it.
 ```
-composer require geekcom/phpjasper
+composer require smart145/phpjasper
 ```
 Or in your file'composer.json' add:
 
 ```json
 {
     "require": {
-        "geekcom/phpjasper": "^3.2.0"
+        "smart145/phpjasper": "^3.3.5"
     }
 }
 ```
