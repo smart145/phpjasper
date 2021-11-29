@@ -219,10 +219,28 @@ class PHPJasper
 
     /**
      * @param string $input
+     * @return $this
+     * @throws \Exception
+     */
+    public function listParameters(string $input)
+    {
+        if (!is_file($input)) {
+            throw new Exception\InvalidInputFile();
+        }
+
+        $this->command = $this->checkServer();
+        $this->command .= ' list_parameters ';
+        $this->command .= '"' . realpath($input) . '"';
+
+        return $this;
+    }
+
+    /**
+     * @param string $input
      * @return array
      * @throws Exception\InvalidInputFile
      */
-    public function listParameters(string $input)
+    public function listParametersTemplate(string $input)
     {
         if (!is_file($input)) {
             throw new Exception\InvalidInputFile();
