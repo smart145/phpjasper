@@ -219,8 +219,8 @@ class PHPJasper
 
     /**
      * @param string $input
-     * @return $this
-     * @throws \Exception
+     * @return array
+     * @throws Exception\InvalidInputFile
      */
     public function listParameters(string $input)
     {
@@ -232,7 +232,17 @@ class PHPJasper
         $this->command .= ' list_parameters ';
         $this->command .= '"' . realpath($input) . '"';
 
-        return $this;
+        $output = [];
+        $parameters = [];
+
+        chdir($this->pathExecutable);
+        exec($this->command, $output);
+
+        foreach ($output as $parameter) {
+            $parameters[] = substr($parameter, 2, strpos($parameter, ' ', 2) -2);
+        }
+
+        return $parameters;
     }
 
     /**
