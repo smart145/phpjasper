@@ -222,20 +222,34 @@ class PHPJasper
      * @return mixed
      * @throws Exception\InvalidInputFile
      */
-    public function listFields(string $input)
+    public function listFieldsAndParams(string $input)
     {
         if (!is_file($input)) {
             throw new Exception\InvalidInputFile();
         }
 
-        $fileContent = file_get_contents($input);
+        $objXmlDocument = simplexml_load_file($input);
+        $objJsonDocument = json_encode($objXmlDocument);
+        $structure = json_decode($objJsonDocument, true);
 
-        preg_match_all("/<field name=\"(.*?)\"/s", $fileContent, $fieldsKeys);
-        preg_match_all("/<subDataset name=\"(.*?)\"/s", $fileContent, $subDataSetKeys);
+        $fields = [];
+        foreach ($structure['field'] ?? [] as $field) {
+            $fields[] = $field['@attributes']['name'];
+        }
 
-        $matches = array_merge($fieldsKeys[1] ?? [], $subDataSetKeys[1] ?? []);
+        foreach ($structure['subDataset'] ?? [] as $subDataset) {
+            $fields[] = $subDataset['@attributes']['name'];
+        }
 
-        return $matches ?? [];
+        $params = [];
+        foreach ($structure['parameter'] ?? [] as $param) {
+            $params[] = $param['@attributes']['name'];
+        }
+
+        return [
+            'fields' => $fields,
+            'params' => $params,
+        ];
     }
 
     /**
