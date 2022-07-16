@@ -229,8 +229,7 @@ class PHPJasper
         }
 
         $objXmlDocument = simplexml_load_file($input);
-        $objJsonDocument = json_encode($objXmlDocument);
-        $structure = json_decode($objJsonDocument, true);
+        $structure = json_decode(json_encode($objXmlDocument), true);
 
         $fields = [];
         foreach ($structure['field'] ?? [] as $field) {
