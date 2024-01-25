@@ -344,10 +344,12 @@ class PHPJasper
         $returnVar = 0;
 
         chdir($this->pathExecutable);
-        exec($this->command, $output, $returnVar);
+        exec($this->command.' 2>&1', $output, $returnVar);
 
         if ($returnVar !== 0) {
-            throw new Exception\ErrorCommandExecutable();
+            $errorMessage = implode(", ", $output);
+
+            throw new Exception\ErrorCommandExecutable($errorMessage);
         }
 
         return $output;
