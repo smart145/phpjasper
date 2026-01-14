@@ -11,3 +11,5 @@ phpunit.xml
 .settings
 ## PHPStorm
 .idea/
+.DS_Store
+.history/
